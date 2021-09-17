@@ -12,15 +12,18 @@ schedules:
 
 trigger:
   batch: true
-  branches:
+  branches: # main, dev have own ci jobs
     include:
     - fix/*
     - feat/*
-    - main
-    - dev
   paths:
     exclude:
     - README.md
+
+pr:
+  branches:
+  - main
+  - dev
 
 pool:
   vmImage: 'ubuntu-latest'

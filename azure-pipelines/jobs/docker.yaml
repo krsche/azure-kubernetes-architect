@@ -4,11 +4,11 @@ jobs:
   steps:
   # - template: ../steps/debug-vars.yaml
 
-  - bash: |
-      npm ci
-      npm run compile-sass
-      docker build -t $(dockerImage):$(imageTag) .
-    displayName: Docker - build
+  # - bash: |
+  #     npm ci
+  #     npm run compile-sass
+  #     docker build -t $(dockerImage):$(imageTag) .
+  #   displayName: Docker - build
 
   # Sept 2021 - currently a private repo
   # - task: SnykSecurityScan@0
@@ -35,17 +35,31 @@ jobs:
 
   # So we can keep default imagePullPolicy which caches images on nodes
   - template: ../steps/append-sha.yaml
-
   - bash: |
-      docker build -t $(dockerImage):$(imageTag) .
-      docker push $(dockerImage):$(imageTag)
-    displayName: Docker - Build and Push
+      echo ''
+      echo '===== Conditions ====='
+      echo 'isMain:         $(isMain)'
+      echo 'isTag:          $(isTag)'
+      echo 'isProduction:   $(isProduction)'
+      echo 'isFork:         $(isFork)'
+      echo 'isPR:           $(isPR)'
+      echo 'isScheduled:    $(isScheduled)'
+      echo 'isTrustedCI:    $(isTrustedCI)'
+      echo ''
 
-  - task: Docker@2
-    displayName: Docker - Logout
-    inputs:
-      command: logout
-      containerRegistry: $(acrConnection)
+      echo '===== DOCKER ====='
+      echo 'imageTag:       $(imageTag)'
+
+  # - bash: |
+  #     docker build -t $(dockerImage):$(imageTag) .
+  #     docker push $(dockerImage):$(imageTag)
+  #   displayName: Docker - Build and Push
+
+  # - task: Docker@2
+  #   displayName: Docker - Logout
+  #   inputs:
+  #     command: logout
+  #     containerRegistry: $(acrConnection)
 
   # - task: AzureCLI@2
   #   displayName: 'ACR - lock production image'
