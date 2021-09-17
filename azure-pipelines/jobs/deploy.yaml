@@ -8,13 +8,15 @@ jobs:
   - template: ../steps/debug-vars.yaml
   - template: ../steps/install-kubelogin.yaml
 
-  - bash: |
-      ls -oa ~/.kube/config
-      ls -oa $HOME/.kube/config
-    displayName: verify location of kubeconfig
+  # Seems no access to ~ so no idea where kubeconfig is 🤷‍♀️
+  # - bash: |
+  #     ls -oa ~/.kube/config
+  #     ls -oa $HOME/.kube/config
+  #   displayName: verify location of kubeconfig
 
+      # kubelogin convert-kubeconfig -l spn
   - bash: |
-      kubelogin convert-kubeconfig -l spn
+      kubelogin convert-kubeconfig -l azurecli
       kubectl get pods --namespace aks-architect
     # explicitly map Key Vault integrated secrets
     env:
