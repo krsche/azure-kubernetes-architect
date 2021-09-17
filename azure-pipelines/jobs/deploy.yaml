@@ -17,9 +17,12 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: |
         az --version
-
-      # env:
-      #   IMAGE_TAG: $(imageTag)
+        az aks get-credentials --resource-group $RG_AKS --name $CLUSTER_NAME --overwrite-existing --file .kubeconfig-${CLUSTER_NAME}
+        kubectl get pods --namespace aks-architect
+      env:
+        IMAGE_TAG: $(imageTag)
+        CLUSTER_NAME: cloudkube-dev-r9er-cluster
+        RG_AKS: cloudkube-dev-r9er-rg
 
         # kubelogin convert-kubeconfig -l azurecli
         # kubectl get pods --namespace aks-architect
