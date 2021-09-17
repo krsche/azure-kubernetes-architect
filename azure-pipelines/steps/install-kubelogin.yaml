@@ -1,0 +1,10 @@
+# This is required because we have an AAD integrated AKS cluster
+# and have disabled local accounts. kubelogin lets the service principal
+# do a non-interactive login
+steps:
+- bash: |
+    curl -LO "https://github.com/Azure/kubelogin/releases/download/$(kubeloginVersion)/kubelogin-linux-amd64.zip"
+    sudo unzip -j "kubelogin-linux-amd64.zip" -d /usr/local/bin
+    rm -f "kubelogin-linux-amd64.zip"
+    kubelogin --version
+  displayName: Install kubelogin

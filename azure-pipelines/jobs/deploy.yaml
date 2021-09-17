@@ -1,12 +1,41 @@
 jobs:
 - job: Deploy
   displayName: Deploy
+  variables:
+  - group: aks-credentials-kv-group
   steps:
   - template: ../steps/append-sha.yaml
   - template: ../steps/debug-vars.yaml
+  - template: ../steps/install-kubelogin.yaml
+
   - bash: |
-      cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
-      cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
-      cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+      ls -oa ~/.kube/config
+      ls -oa $HOME/.kube/config
+    displayName: verify location of kubeconfig
+
+  - bash: |
+      kubelogin convert-kubeconfig -l spn
+      kubectl get pods --namespace aks-architect
+    # explicitly map Key Vault integrated secrets
     env:
-      IMAGE_TAG: $(imageTag)
+      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
+      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
+    displayName: try kubelogin
+  # - bash: |
+  #     cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
+  #     cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
+  #     cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+  #   env:
+  #     IMAGE_TAG: $(imageTag)
+
+  # - task: AzureCLI@2
+  #   displayName: kubectl
+  #   inputs:
+  #     azureSubscription: $(armConnection)
+  #     scriptType: bash
+  #     scriptLocation: inlineScript
+  #     inlineScript: |
+  #       az --version
+  #       kubectl get pods --namespace aks-architect
+  #     env:
+  #       IMAGE_TAG: $(imageTag)
