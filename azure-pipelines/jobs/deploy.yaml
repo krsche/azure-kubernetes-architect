@@ -13,21 +13,20 @@ jobs:
   - template: ../steps/install-kubelogin.yaml
 
 
-  - task: AzureCLI@2
-    displayName: kubectl inside azcli
-    continueOnFail: true
-    inputs:
-      azureSubscription: $(armConnection)
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        az --version
-        az aks get-credentials --resource-group $RG_AKS --name $CLUSTER_NAME --overwrite-existing --file .kubeconfig-${CLUSTER_NAME}
+  # - task: AzureCLI@2
+  #   displayName: kubectl inside azcli
+  #   inputs:
+  #     azureSubscription: $(armConnection)
+  #     scriptType: bash
+  #     scriptLocation: inlineScript
+  #     inlineScript: |
+  #       az --version
+  #       az aks get-credentials --resource-group $RG_AKS --name $CLUSTER_NAME --overwrite-existing --file .kubeconfig-${CLUSTER_NAME}
 
-        export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-        kubelogin convert-kubeconfig -l azurecli
+  #       export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+  #       kubelogin convert-kubeconfig -l azurecli
 
-        kubectl get pods --namespace aks-architect
+  #       kubectl get pods --namespace aks-architect
 
 
   # IMAGE_TAG: $(imageTag)
