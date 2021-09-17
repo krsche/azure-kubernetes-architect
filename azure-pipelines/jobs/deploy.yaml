@@ -21,15 +21,21 @@ jobs:
         --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
         --tenant $AZ_TENANT_ID
 
-      az group list -o table
+
 
       touch .kubeconfig-${CLUSTER_NAME}
+      chmod 600 .kubeconfig-${CLUSTER_NAME}
 
       az aks get-credentials \
         --resource-group $RG_AKS \
         --name $CLUSTER_NAME \
         --overwrite-existing \
         --file .kubeconfig-${CLUSTER_NAME}
+
+      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+      kubelogin convert-kubeconfig -l spn
+
+      kubectl get pods --namespace aks-architect
 
 
     displayName: Try Kubelogin cleaned up
