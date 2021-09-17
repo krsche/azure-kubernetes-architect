@@ -177,6 +177,18 @@ resource "azurerm_role_assignment" "kubelets_acr_pull" {
 }
 
 
+# ========
+# DEBUG
+# ========
+
+# data "azurerm_subscription" "current" {}
+
+# resource "azurerm_role_assignment" "sub_contributor" {
+#   scope                = data.azurerm_subscription.current.id
+#   role_definition_name = "Contributor"
+#   principal_id         = azuread_service_principal.ci["dev"].object_id
+# }
+
 # =========
 #  Outputs
 # =========

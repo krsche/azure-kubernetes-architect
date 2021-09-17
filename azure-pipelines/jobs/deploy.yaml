@@ -21,8 +21,6 @@ jobs:
         --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
         --tenant $AZ_TENANT_ID
 
-
-
       touch .kubeconfig-${CLUSTER_NAME}
       chmod 600 .kubeconfig-${CLUSTER_NAME}
 
@@ -37,13 +35,15 @@ jobs:
 
       kubectl get pods --namespace aks-architect
 
-
     displayName: Try Kubelogin cleaned up
     env:
       AZ_TENANT_ID:                        $(tenant-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
 
+  - bash: |
+      kubectl get pods --namespace aks-architect
+    displayName: "still have context?"
 
 
       # az aks get-credentials \
@@ -57,20 +57,7 @@ jobs:
 
       # kubectl get pods --namespace aks-architect
 
-  # - task: AzureCLI@2
-  #   displayName: kubectl inside azcli
-  #   inputs:
-  #     azureSubscription: $(armConnection)
-  #     scriptType: bash
-  #     scriptLocation: inlineScript
-  #     inlineScript: |
-  #       az --version
-  #       az aks get-credentials --resource-group $RG_AKS --name $CLUSTER_NAME --overwrite-existing --file .kubeconfig-${CLUSTER_NAME}
 
-  #       export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-  #       kubelogin convert-kubeconfig -l azurecli
-
-  #       kubectl get pods --namespace aks-architect
 
 
   # IMAGE_TAG: $(imageTag)
