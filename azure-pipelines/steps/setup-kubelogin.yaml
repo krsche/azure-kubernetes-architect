@@ -31,7 +31,7 @@ steps:
 
     # Populate kubeconfig
     az aks get-credentials \
-      --resource-group $aksClusterResourceGroup \
+      --resource-group ${aksClusterResourceGroup} \
       --name $aksClusterName \
       --overwrite-existing \
       --file .kubeconfig-${aksClusterName}
