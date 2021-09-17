@@ -15,11 +15,11 @@ jobs:
       # kubelogin convert-kubeconfig -l spn
 
       kubectl get pods --namespace $(appNamespace)
-    displayName: "won't work anymore...?"
+    displayName: "maybe works with cli login...?"
     env:
       KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+      # AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
+      # AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
 
   - bash: |
       kubelogin remove-tokens
