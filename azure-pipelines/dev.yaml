@@ -24,7 +24,7 @@ stages:
 #   - template: jobs/ci.yaml
 
 - stage: buildStage
-  dependsOn: ciStage
+  # dependsOn: ciStage
   jobs:
   # - template: jobs/docker.yaml
   - template: jobs/deploy.yaml

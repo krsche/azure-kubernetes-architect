@@ -10,13 +10,14 @@ jobs:
 
 
   - task: AzureCLI@2
-    displayName: kubectl
+    displayName: kubectl inside azcli
     inputs:
       azureSubscription: $(armConnection)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
         az --version
+        kubelogin convert-kubeconfig -l azurecli
         kubectl get pods --namespace aks-architect
       # env:
       #   IMAGE_TAG: $(imageTag)
