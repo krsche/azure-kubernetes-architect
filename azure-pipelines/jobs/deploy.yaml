@@ -25,6 +25,12 @@ jobs:
 
       touch .kubeconfig-${CLUSTER_NAME}
 
+      az aks get-credentials \
+        --resource-group $RG_AKS \
+        --name $CLUSTER_NAME \
+        --overwrite-existing \
+        --file .kubeconfig-${CLUSTER_NAME}
+
 
     displayName: Try Kubelogin cleaned up
     env:
