@@ -21,6 +21,7 @@ jobs:
         --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
         --tenant $AZ_TENANT_ID
 
+      # Do comments work here?
       touch .kubeconfig-${CLUSTER_NAME}
       chmod 600 .kubeconfig-${CLUSTER_NAME}
 
@@ -36,12 +37,15 @@ jobs:
       kubectl get pods --namespace aks-architect
 
     displayName: Try Kubelogin cleaned up
+    continueOnError: true
     env:
       AZ_TENANT_ID:                        $(tenant-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
 
   - bash: |
+      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+      kubelogin convert-kubeconfig -l spn
       kubectl get pods --namespace aks-architect
     displayName: "still have context?"
     env:
