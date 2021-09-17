@@ -4,87 +4,26 @@ jobs:
   variables:
   - group: mask-subscription-ids
   - group: aks-credentials-kv-group
-  - name: CLUSTER_NAME
-    value: cloudkube-dev-r9er-cluster
-  - name: RG_AKS
-    value: cloudkube-dev-r9er-rg
+
   steps:
   - template: ../steps/append-sha.yaml
   - template: ../steps/debug-vars.yaml
-  - template: ../steps/install-kubelogin.yaml
-
-  # https://stackoverflow.com/questions/54004007/azure-devop-pipelines-authentication-to-aks-with-azure-ad-rbac-configured
-  - bash: |
-      az login \
-        --service-principal \
-        --username $AAD_SERVICE_PRINCIPAL_CLIENT_ID \
-        --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
-        --tenant $AZ_TENANT_ID
-
-      # Do comments work here?
-      touch .kubeconfig-${CLUSTER_NAME}
-      chmod 600 .kubeconfig-${CLUSTER_NAME}
-
-      az aks get-credentials \
-        --resource-group $RG_AKS \
-        --name $CLUSTER_NAME \
-        --overwrite-existing \
-        --file .kubeconfig-${CLUSTER_NAME}
-
-      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-      kubelogin convert-kubeconfig -l spn
-
-      kubectl get pods --namespace aks-architect
-
-    displayName: Try Kubelogin cleaned up
-    continueOnError: true
-    env:
-      AZ_TENANT_ID:                        $(tenant-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
-
-
-  - bash: |
-      kubectl get pods --namespace aks-architect
-    displayName: "just kubectl - should break"
-    continueOnError: true
-    env:
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
-
-  - bash: |
-      kubelogin convert-kubeconfig -l spn
-      kubectl get pods --namespace aks-architect
-    displayName: "just kubelogin - might work?"
-    continueOnError: true
-    env:
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+  - template: ../steps/setup-kubelogin.yaml
 
   - bash: |
       export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+      echo $KUBECONFIG
+      echo ""
+      echo $CONFIG_TEST
+      echo ""
       kubelogin convert-kubeconfig -l spn
+
       kubectl get pods --namespace aks-architect
     displayName: "still have context?"
     env:
+      CONFIG_TEST:                         ${Pipeline.Workspace}/.kubeconfig-${aksClusterName}
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
-      # AZ_TENANT_ID:                        $(tenant-id)
-
-
-      # az aks get-credentials \
-      #   --resource-group $RG_AKS \
-      #   --name $CLUSTER_NAME \
-      #   --overwrite-existing \
-      #   --file .kubeconfig-${CLUSTER_NAME}
-
-      # export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-      # kubelogin convert-kubeconfig -l spn
-
-      # kubectl get pods --namespace aks-architect
-
-
-
 
   # - bash: |
   #     touch .kubeconfig-${CLUSTER_NAME}
