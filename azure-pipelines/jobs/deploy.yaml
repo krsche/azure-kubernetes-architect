@@ -3,6 +3,10 @@ jobs:
   displayName: Deploy
   variables:
   - group: aks-credentials-kv-group
+  - name: CLUSTER_NAME
+    value: cloudkube-dev-r9er-cluster
+  - name: RG_AKS
+    value: cloudkube-dev-r9er-rg
   steps:
   - template: ../steps/append-sha.yaml
   - template: ../steps/debug-vars.yaml
@@ -19,13 +23,11 @@ jobs:
         az --version
         az aks get-credentials --resource-group $RG_AKS --name $CLUSTER_NAME --overwrite-existing --file .kubeconfig-${CLUSTER_NAME}
         kubectl get pods --namespace aks-architect
-      env:
-        IMAGE_TAG: $(imageTag)
-        CLUSTER_NAME: cloudkube-dev-r9er-cluster
-        RG_AKS: cloudkube-dev-r9er-rg
 
-        # kubelogin convert-kubeconfig -l azurecli
-        # kubectl get pods --namespace aks-architect
+
+  # IMAGE_TAG: $(imageTag)
+  # kubelogin convert-kubeconfig -l azurecli
+  # kubectl get pods --namespace aks-architect
 
   # Seems no access to ~ so no idea where kubeconfig is 🤷‍♀️
   # - bash: |
