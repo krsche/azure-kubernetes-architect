@@ -26,22 +26,22 @@ steps:
       --tenant $AZ_TENANT_ID
 
     # Fails if it doesn't exist
-    touch .kubeconfig-${aksClusterName}
-    chmod 600 .kubeconfig-${aksClusterName}
+    touch .kubeconfig-$(aksClusterName)
+    chmod 600 .kubeconfig-$(aksClusterName)
 
     # Populate kubeconfig
     az aks get-credentials \
-      --resource-group ${aksClusterResourceGroup} \
-      --name $aksClusterName \
+      --resource-group $(aksClusterResourceGroup) \
+      --name $(aksClusterName) \
       --overwrite-existing \
-      --file .kubeconfig-${aksClusterName}
+      --file .kubeconfig-$(aksClusterName)
 
     # Pass kubeconfig to kubelogin to access k8s API
-    export KUBECONFIG=$(pwd)/.kubeconfig-${aksClusterName}
+    export KUBECONFIG=$(pwd)/.kubeconfig-$(aksClusterName)
     kubelogin convert-kubeconfig -l spn
 
     # confirm it works
-    kubectl get pods --namespace ${appNamespace}
+    kubectl get pods --namespace $(appNamespace)
   displayName: az login, get kubecontext
   env:
     AZ_TENANT_ID:                        $(tenant-id)
