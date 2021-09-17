@@ -12,33 +12,19 @@ jobs:
 
   - bash: |
 
-      # kubelogin convert-kubeconfig -l spn
-
+      # confirm it works
       kubectl get pods --namespace $(appNamespace)
-    displayName: "maybe works with cli login...?"
+
+      # now apply
+      cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+
+    displayName: "kubectl apply"
     env:
-      KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
-      # AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      # AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+      KUBECONFIG: $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
+      IMAGE_TAG:  $(imageTag)
 
   - bash: |
       kubelogin remove-tokens
     displayName: kubelogin - clear cache
-
-  # - bash: |
-  #     touch .kubeconfig-${CLUSTER_NAME}
-  #     export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-  #     kubelogin convert-kubeconfig -l spn
-  #     kubectl get pods --namespace aks-architect
-  #   # explicitly map Key Vault integrated secrets
-  #     # kubelogin convert-kubeconfig -l azurecli
-  #   env:
-  #     AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-  #     AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
-  #   displayName: try kubelogin
-  # - bash: |
-  #     cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
-  #     cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
-  #     cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
-  #   env:
-  #     IMAGE_TAG: $(imageTag)

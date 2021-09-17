@@ -42,7 +42,6 @@ steps:
       --file .kubeconfig-$(aksClusterName)
 
     # Pass kubeconfig to kubelogin to access k8s API
-    # kubelogin convert-kubeconfig -l spn
     kubelogin convert-kubeconfig -l azurecli
 
     # confirm it works
