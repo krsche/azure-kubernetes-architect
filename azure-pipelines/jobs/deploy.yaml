@@ -18,8 +18,12 @@ jobs:
     displayName: "won't work anymore...?"
     env:
       KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+      # AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
+      # AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+
+  - bash: |
+      kubelogin remove-tokens
+    displayName: kubelogin - clear cache
 
   # - bash: |
   #     touch .kubeconfig-${CLUSTER_NAME}
