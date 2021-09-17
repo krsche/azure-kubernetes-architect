@@ -11,10 +11,11 @@ jobs:
   - template: ../steps/setup-kubelogin.yaml
 
   - bash: |
-      kubelogin convert-kubeconfig -l spn
 
-      kubectl get pods --namespace aks-architect
-    displayName: "still have context?"
+      # kubelogin convert-kubeconfig -l spn
+
+      kubectl get pods --namespace $(appNamespace)
+    displayName: "won't work anymore...?"
     env:
       KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
