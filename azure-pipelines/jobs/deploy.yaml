@@ -32,6 +32,7 @@ jobs:
 
       # kubelogin convert-kubeconfig -l spn
   - bash: |
+      touch .kubeconfig-cloudkube-dev
       export KUBECONFIG=$(pwd)/.kubeconfig-cloudkube-dev
       kubelogin convert-kubeconfig -l spn
       kubelogin convert-kubeconfig -l azurecli
