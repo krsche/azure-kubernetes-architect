@@ -18,7 +18,8 @@ jobs:
     inputs:
       connectionType: Kubernetes Service Connection
       kubernetesServiceEndpoint: test-k8s-ns-connection
-      command: get pods
+      command: get
+      arguments: pods
       namespace: aks-architect
       # azureResourceGroup: $(RG_AKS)
       # kubernetesCluster: $(CLUSTER_NAME)
