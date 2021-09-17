@@ -17,7 +17,7 @@ jobs:
     displayName: kubectl get pods
     inputs:
       connectionType: Kubernetes Service Connection
-      kubernetesServiceEndpoint: $(armConnection)
+      kubernetesServiceEndpoint: test-k8s-ns-connection
       command: get pods
       namespace: aks-architect
       # azureResourceGroup: $(RG_AKS)
