@@ -16,8 +16,6 @@ variables:
   # Docker
   dockerRegistry:   aksarchitect.azurecr.io
   imageName:        aks-archtitect
-  ${{ if eq(variables.isTag, 'False') }}:
-    imageTag:       dev
   ${{ if eq(variables.isTag, 'True') }}:
     imageTag:       ${{ replace(variables['Build.SourceBranch'], 'refs/tags/v', '') }}
   dockerImage:      ${{ variables.dockerRegistry }}/${{ variables.imageName }}

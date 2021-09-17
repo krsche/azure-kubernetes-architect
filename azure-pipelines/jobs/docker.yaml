@@ -27,17 +27,13 @@ jobs:
   steps:
   # - template: ../steps/debug-vars.yaml
 
-  # - bash: |
-  #     npm ci
-  #     npm run compile-sass
-  #   displayName: Compile CSS
-
   - task: Docker@2
     displayName: Docker - Login
     inputs:
       command: login
       containerRegistry: $(acrConnection)
 
+  # So we can keep default imagePullPolicy which caches images on nodes
   - template: ../steps/append-sha.yaml
 
   - bash: |

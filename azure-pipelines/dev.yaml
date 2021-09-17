@@ -4,7 +4,7 @@ trigger:
   batch: true
   branches:
     include:
-    - main
+    - dev
   paths:
     exclude:
     - README.md
@@ -26,4 +26,4 @@ stages:
   dependsOn: ciStage
   jobs:
   - template: jobs/docker.yaml
-
+  - template: jobs/deploy.yaml

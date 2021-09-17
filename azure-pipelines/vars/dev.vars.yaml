@@ -1,2 +1,3 @@
 variables:
-  armConnection:    aks-architect-ci-dev-sp
+  armConnection:  aks-architect-ci-dev-sp
+  imageTag:       dev

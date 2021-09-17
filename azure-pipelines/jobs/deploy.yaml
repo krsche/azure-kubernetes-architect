@@ -1,0 +1,12 @@
+jobs:
+- job: Deploy
+  displayName: Deploy
+  steps:
+  -
+  - template: ../steps/append-sha.yaml
+  - bash: |
+      cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+    env:
+      IMAGE_TAG: $(imageTag)
