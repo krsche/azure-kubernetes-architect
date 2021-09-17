@@ -21,7 +21,7 @@ jobs:
       kubectl get pods --namespace aks-architect
     displayName: "still have context?"
     env:
-      CONFIG_TEST:                         ${Pipeline.Workspace}/.kubeconfig-$(aksClusterName)
+      CONFIG_TEST:                         $(Pipeline.Workspace)/.kubeconfig-$(aksClusterName)
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
 

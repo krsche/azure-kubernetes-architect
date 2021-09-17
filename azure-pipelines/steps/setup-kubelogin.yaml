@@ -13,7 +13,7 @@ steps:
     sudo unzip -j "kubelogin-linux-amd64.zip" -d /usr/local/bin
     rm -f "kubelogin-linux-amd64.zip"
     kubelogin --version
-  displayName: Install kubelogin
+  displayName: kubelogin - install
 
   # For details, see # https://stackoverflow.com/questions/54004007/azure-devop-pipelines-authentication-to-aks-with-azure-ad-rbac-configured
 - bash: |
@@ -42,7 +42,7 @@ steps:
 
     # confirm it works
     kubectl get pods --namespace $(appNamespace)
-  displayName: az login, get kubecontext
+  displayName: kubelogin - aks-credentials to kubecontext
   env:
     AZ_TENANT_ID:                        $(tenant-id)
     AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
