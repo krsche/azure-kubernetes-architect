@@ -2,6 +2,7 @@ jobs:
 - job: Deploy
   displayName: Deploy
   variables:
+  - group: mask-subscription-ids
   - group: aks-credentials-kv-group
   - name: CLUSTER_NAME
     value: cloudkube-dev-r9er-cluster
@@ -12,6 +13,30 @@ jobs:
   - template: ../steps/debug-vars.yaml
   - template: ../steps/install-kubelogin.yaml
 
+  # https://stackoverflow.com/questions/54004007/azure-devop-pipelines-authentication-to-aks-with-azure-ad-rbac-configured
+  - bash: |
+      az login \
+        --service-principal \
+        --username $AAD_SERVICE_PRINCIPAL_CLIENT_ID \
+        --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
+        --tenant $AZ_TENANT_ID
+
+      az aks get-credentials \
+        --resource-group $RG_AKS \
+        --name $CLUSTER_NAME \
+        --overwrite-existing \
+        --file .kubeconfig-${CLUSTER_NAME}
+
+      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+      kubelogin convert-kubeconfig -l spn
+
+      kubectl get pods --namespace aks-architect
+
+    displayName: Try Kubelogin cleaned up
+    env:
+      AZ_TENANT_ID:                        $(tenant-id)
+      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
+      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
 
   # - task: AzureCLI@2
   #   displayName: kubectl inside azcli
@@ -40,17 +65,17 @@ jobs:
   #   displayName: verify location of kubeconfig
 
       # kubelogin convert-kubeconfig -l spn
-  - bash: |
-      touch .kubeconfig-${CLUSTER_NAME}
-      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
-      kubelogin convert-kubeconfig -l spn
-      kubectl get pods --namespace aks-architect
-    # explicitly map Key Vault integrated secrets
-      # kubelogin convert-kubeconfig -l azurecli
-    env:
-      AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
-      AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
-    displayName: try kubelogin
+  # - bash: |
+  #     touch .kubeconfig-${CLUSTER_NAME}
+  #     export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
+  #     kubelogin convert-kubeconfig -l spn
+  #     kubectl get pods --namespace aks-architect
+  #   # explicitly map Key Vault integrated secrets
+  #     # kubelogin convert-kubeconfig -l azurecli
+  #   env:
+  #     AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
+  #     AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
+  #   displayName: try kubelogin
   # - bash: |
   #     cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
   #     cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
