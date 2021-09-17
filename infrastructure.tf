@@ -150,6 +150,16 @@ resource "azurerm_role_assignment" "ci_namespace" {
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
 
+# Needed to list configs for az aks get-credentials
+# https://docs.microsoft.com/en-us/azure/aks/control-kubeconfig-access
+resource "azurerm_role_assignment" "cluster_user" {
+  for_each             = local.environments
+  scope                = data.azurerm_kubernetes_cluster.cloudkube[each.key].id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
+  principal_id         = azuread_service_principal.ci[each.key].object_id
+}
+
+
 # Get reference to cluster kubelets (managed in aks iac repo)
 
 data "azurerm_user_assigned_identity" "kubelets" {
@@ -193,9 +203,12 @@ output "service_principal_rbac" {
     client_id    = azuread_service_principal.ci[k].application_id
     object_id    = azuread_service_principal.ci[k].object_id
     roles = [{
+      name  = "Azure Kubernetes Service Cluster User Role"
+      scope = data.azurerm_kubernetes_cluster.cloudkube[k].id
+    }, {
       name  = "Azure Kubernetes Service RBAC Writer"
       scope = "${data.azurerm_kubernetes_cluster.cloudkube[k].id}/namespaces/${local.app_namespace}"
-      }, {
+    }, {
       name  = "AcrPush"
       scope = azurerm_container_registry.acr.id
     }]
