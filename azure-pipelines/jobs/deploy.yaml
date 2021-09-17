@@ -14,7 +14,7 @@ jobs:
   - template: ../steps/install-kubelogin.yaml
 
   - task: Kubernetes@1
-    displayName: kubectl get pods
+    displayName: kubectl get pods please fail
     inputs:
       connectionType: Kubernetes Service Connection
       kubernetesServiceEndpoint: test-k8s-ns-connection
