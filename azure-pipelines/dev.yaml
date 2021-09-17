@@ -16,6 +16,7 @@ pool:
 
 variables:
 - template: vars/global.vars.yaml
+- template: vars/dev.vars.yaml
 
 stages:
 - stage: ciStage

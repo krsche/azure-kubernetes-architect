@@ -3,6 +3,7 @@ jobs:
   displayName: Deploy
   steps:
   - template: ../steps/append-sha.yaml
+  - template: ../steps/debug-vars.yaml
   - bash: |
       cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
       cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
