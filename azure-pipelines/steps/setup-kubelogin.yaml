@@ -37,7 +37,6 @@ steps:
       --file .kubeconfig-$(aksClusterName)
 
     # Pass kubeconfig to kubelogin to access k8s API
-    export KUBECONFIG=$(pwd)/.kubeconfig-$(aksClusterName)
     kubelogin convert-kubeconfig -l spn
 
     # confirm it works
@@ -47,3 +46,4 @@ steps:
     AZ_TENANT_ID:                        $(tenant-id)
     AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
     AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
+    KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)

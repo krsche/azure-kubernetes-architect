@@ -11,17 +11,12 @@ jobs:
   - template: ../steps/setup-kubelogin.yaml
 
   - bash: |
-      export KUBECONFIG=$(pwd)/.kubeconfig-$(aksClusterName)
-      echo $KUBECONFIG
-      echo ""
-      echo $CONFIG_TEST
-      echo ""
       kubelogin convert-kubeconfig -l spn
 
       kubectl get pods --namespace aks-architect
     displayName: "still have context?"
     env:
-      CONFIG_TEST:                         $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
+      KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
 
