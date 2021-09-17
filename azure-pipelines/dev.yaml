@@ -16,15 +16,20 @@ pool:
 
 variables:
 - template: vars/global.vars.yaml
-- template: vars/dev.vars.yaml
+- template: vars/dev.vars.yaml # Dev
 
 stages:
-# - stage: ciStage
-#   jobs:
-#   - template: jobs/ci.yaml
+- stage: ciStage
+  displayName: CI - Code Quality
+  jobs:
+  - template: jobs/ci.job.yaml
 
 - stage: buildStage
-  # dependsOn: ciStage
+  displayName: Docker - Build and Push
   jobs:
-  - template: jobs/docker.yaml
-  - template: jobs/deploy.yaml
+  - template: jobs/docker.job.yaml
+
+- stage: deployStage
+  displayName: kubectl appy
+  jobs:
+  - template: jobs/deploy.job.yaml

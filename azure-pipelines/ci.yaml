@@ -31,4 +31,4 @@ pool:
 stages:
 - stage: ci
   jobs:
-  - template: jobs/ci.yaml
+  - template: jobs/ci.job.yaml
