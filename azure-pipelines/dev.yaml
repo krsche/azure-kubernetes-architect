@@ -19,12 +19,12 @@ variables:
 - template: vars/dev.vars.yaml
 
 stages:
-- stage: ciStage
-  jobs:
-  - template: jobs/ci.yaml
+# - stage: ciStage
+#   jobs:
+#   - template: jobs/ci.yaml
 
 - stage: buildStage
   dependsOn: ciStage
   jobs:
-  - template: jobs/docker.yaml
+  # - template: jobs/docker.yaml
   - template: jobs/deploy.yaml

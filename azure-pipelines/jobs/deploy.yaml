@@ -8,6 +8,20 @@ jobs:
   - template: ../steps/debug-vars.yaml
   - template: ../steps/install-kubelogin.yaml
 
+
+  - task: AzureCLI@2
+    displayName: kubectl
+    inputs:
+      azureSubscription: $(armConnection)
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        kubectl get pods --namespace aks-architect
+      # env:
+      #   IMAGE_TAG: $(imageTag)
+
+
   # Seems no access to ~ so no idea where kubeconfig is 🤷‍♀️
   # - bash: |
   #     ls -oa ~/.kube/config
