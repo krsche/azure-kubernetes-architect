@@ -17,11 +17,12 @@ jobs:
       scriptLocation: inlineScript
       inlineScript: |
         az --version
-        kubelogin convert-kubeconfig -l azurecli
-        kubectl get pods --namespace aks-architect
+
       # env:
       #   IMAGE_TAG: $(imageTag)
 
+        # kubelogin convert-kubeconfig -l azurecli
+        # kubectl get pods --namespace aks-architect
 
   # Seems no access to ~ so no idea where kubeconfig is 🤷‍♀️
   # - bash: |
@@ -31,6 +32,8 @@ jobs:
 
       # kubelogin convert-kubeconfig -l spn
   - bash: |
+      export KUBECONFIG=$(pwd)/.kubeconfig-cloudkube-dev
+      kubelogin convert-kubeconfig -l spn
       kubelogin convert-kubeconfig -l azurecli
       kubectl get pods --namespace aks-architect
     # explicitly map Key Vault integrated secrets
