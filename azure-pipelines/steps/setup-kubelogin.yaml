@@ -1,8 +1,13 @@
-# This is required because we have an AAD integrated AKS cluster
-# and have disabled local accounts. kubelogin lets the service principal
-# do a non-interactive login
+# ===========================
+#  Non-Interactive K8s Login
+# ===========================
 #
-# Required Variable Groups (must be set at job level)
+# Why?
+# - AAD integrated cluster for Authentication
+# - K8s local accounts are disabled
+#
+# Requirements?
+# these Variable Groups must be set at job level:
 # - group: mask-subscription-ids
 # - group: aks-credentials-kv-group
 steps:
