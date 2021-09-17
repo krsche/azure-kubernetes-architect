@@ -15,6 +15,7 @@ jobs:
 
   - task: AzureCLI@2
     displayName: kubectl inside azcli
+    continueOnFail: true
     inputs:
       azureSubscription: $(armConnection)
       scriptType: bash
@@ -41,12 +42,12 @@ jobs:
 
       # kubelogin convert-kubeconfig -l spn
   - bash: |
-      touch .kubeconfig-cloudkube-dev
-      export KUBECONFIG=$(pwd)/.kubeconfig-cloudkube-dev
+      touch .kubeconfig-${CLUSTER_NAME}
+      export KUBECONFIG=$(pwd)/.kubeconfig-${CLUSTER_NAME}
       kubelogin convert-kubeconfig -l spn
-      kubelogin convert-kubeconfig -l azurecli
       kubectl get pods --namespace aks-architect
     # explicitly map Key Vault integrated secrets
+      # kubelogin convert-kubeconfig -l azurecli
     env:
       AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
       AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-id)
