@@ -21,6 +21,8 @@ jobs:
         --password $AAD_SERVICE_PRINCIPAL_CLIENT_SECRET \
         --tenant $AZ_TENANT_ID
 
+      touch .kubeconfig-${CLUSTER_NAME}
+
       az aks get-credentials \
         --resource-group $RG_AKS \
         --name $CLUSTER_NAME \
