@@ -1,7 +1,7 @@
 jobs:
-- job: BuildAndScan
-  displayName: Build and Scan
-  steps:
+# - job: BuildAndScan
+#   displayName: Build and Scan
+  # steps:
   # - template: ../steps/debug-vars.yaml
 
   # - bash: |
@@ -23,7 +23,7 @@ jobs:
 
 - job: DockerPush
   displayName: Push
-  dependsOn: BuildAndScan
+  # dependsOn: BuildAndScan
   steps:
   # - template: ../steps/debug-vars.yaml
 
