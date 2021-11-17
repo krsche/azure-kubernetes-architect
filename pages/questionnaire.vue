@@ -41,7 +41,17 @@
 		 * @async
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
-		async asyncData({ $content, params }) {
+		async asyncData({ $content, params }) { // fuck, server side
+			console.log('[DEBUG] questionnaire.asyncData()')
+
+			// Create Cache of Answers
+			// const saved = JSON.parse(window.sessionStorage.getItem('aks-decisions'))
+			const saved = _getState()
+			let cache = {}
+			saved.forEach((el) => {
+				cache[el.question.path] = el.answer.id
+			})
+
 			const undecidedTemplate = await $content('factors/undecided').fetch()
 
 			// --- Questions per Category ---
@@ -62,10 +72,17 @@
 
 						// Add to possible answers
 						q.factors.push(_formatStats(factor))
+
+						// Determine if already decided?
+						if (cache.hasOwnProperty(q.path)) {
+							console.log('*** DEBUG *** already have answer ', cache[q.path])
+						}
 					}
 
 					// Add "undecided" option
 					q.factors.push(_createUndecided(q, undecidedTemplate))
+
+
 				}
 
 				// Add to content db
@@ -79,6 +96,9 @@
 					questions: content[i]
 				})
 			})
+
+			console.log('+++++ final result ++++++')
+			console.log(questionnaire)
 
 			return {
 				questionnaire
@@ -130,6 +150,11 @@
 			..._formatStats(copy),
 			slug: `${question.slug}-undecided`
 		}
+	}
+
+	function _getState() {
+		console.log('_getState')
+		return JSON.parse(sessionStorage.getItem('aks-decisions'))
 	}
 </script>
 

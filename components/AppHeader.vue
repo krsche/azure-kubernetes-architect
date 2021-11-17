@@ -2,9 +2,23 @@
 	<header class="app-header">
 		<div class="wrapper">
 			<h1>Azure Kubernetes Architect</h1>
+			<button @click="onClick">debug storage</button>
 		</div>
 	</header>
 </template>
+
+<script>
+export default {
+	methods: {
+		onClick: function (event, store) {
+			console.log('*** CLICKED DEBUG ***')
+			// console.log(store)
+			const a = this.$store.commit('DEBUG_STORAGE')
+		}
+	}
+}
+</script>
+
 
 <style>
 	.app-header {

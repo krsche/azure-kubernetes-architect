@@ -2,6 +2,7 @@
 	<article class="question-box">
 		<h2 class="question-title"><NuxtLink :to=question.path>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
+		<p>Answer? {{ question.answer }}</p>
 		<!-- <pre>
 {{ question }}
 		</pre> -->
@@ -12,6 +13,7 @@
 			:key=f.slug
 			:factor=f
 			:stats=f.stats
+			:checked="question.answer === f.slug"
 			@selected="onSelected($event, $store, question)"
 			></factor-radio>
 	</article>
@@ -39,8 +41,8 @@
 				 */
 				const selected = event.selected
 				const mutation = selected.id.substr(selected.id.length - 9) == 'undecided'
-					? 'unsetDecision'
-					: 'updateDecision'
+					? 'REMOVE_DECISION'
+					: 'UPDATE_DECISION'
 
 				store.commit(mutation, {
 					question: question,
