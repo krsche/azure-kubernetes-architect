@@ -2,7 +2,8 @@
 	<header class="app-header">
 		<div class="wrapper">
 			<h1>Azure Kubernetes Architect</h1>
-			<button @click="onClick">debug storage</button>
+			<button @click="onClick">debug</button>
+			<button @click="onClear">clear storage</button>
 		</div>
 	</header>
 </template>
@@ -11,9 +12,13 @@
 export default {
 	methods: {
 		onClick: function (event, store) {
-			console.log('*** CLICKED DEBUG ***')
-			// console.log(store)
-			const a = this.$store.commit('DEBUG_STORAGE')
+			console.log('AppHeader.vue - onClick()')
+			this.$store.dispatch('DEBUG_STORAGE')
+		},
+
+		onClear: function (event, store) {
+			console.log('AppHeader.vue - onClear()')
+			this.$store.commit('RESET_DATA')
 		}
 	}
 }

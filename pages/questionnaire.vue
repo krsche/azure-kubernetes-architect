@@ -5,7 +5,7 @@
 		<div class="app-main wrapper">
 			<div class="app-body">
 				<category
-					v-for="cat of questionnaire"
+					v-for="cat of categories"
 					:title=cat.name
 					:key=cat.name
 					:questions=cat.questions
@@ -33,7 +33,7 @@
 
 	export default {
 		/**
-		 * Fetch and load Markdown Content
+		 * [SSR] Fetch and load Markdown Content
 		 * Loads only title and metadata without body
 		 * Sort order set in `categoryDirs` above. Also easer than
 		 * traversing directory and prefixing everything with numbers
@@ -41,17 +41,7 @@
 		 * @async
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
-		async asyncData({ $content, params }) { // fuck, server side
-			console.log('[DEBUG] questionnaire.asyncData()')
-
-			// Create Cache of Answers
-			// const saved = JSON.parse(window.sessionStorage.getItem('aks-decisions'))
-			const saved = _getState()
-			let cache = {}
-			saved.forEach((el) => {
-				cache[el.question.path] = el.answer.id
-			})
-
+		async asyncData({ $content, params }) { // SSR only
 			const undecidedTemplate = await $content('factors/undecided').fetch()
 
 			// --- Questions per Category ---
@@ -72,36 +62,28 @@
 
 						// Add to possible answers
 						q.factors.push(_formatStats(factor))
-
-						// Determine if already decided?
-						if (cache.hasOwnProperty(q.path)) {
-							console.log('*** DEBUG *** already have answer ', cache[q.path])
-						}
 					}
 
 					// Add "undecided" option
 					q.factors.push(_createUndecided(q, undecidedTemplate))
-
-
 				}
 
 				// Add to content db
 				content.push(questions)
 			}
 
-			let questionnaire = []
+			let categories = []
 			categoryDirs.forEach((c, i) => {
-				questionnaire.push({
+				categories.push({
 					name: c,
 					questions: content[i]
 				})
 			})
 
-			console.log('+++++ final result ++++++')
-			console.log(questionnaire)
+			console.log(categories)
 
 			return {
-				questionnaire
+				categories
 			}
 		},
 	}
@@ -152,9 +134,9 @@
 		}
 	}
 
-	function _getState() {
-		console.log('_getState')
-		return JSON.parse(sessionStorage.getItem('aks-decisions'))
-	}
+	// function _getState() {
+	// 	console.log('_getState')
+	// 	return JSON.parse(sessionStorage.getItem('aks-decisions'))
+	// }
 </script>
 
