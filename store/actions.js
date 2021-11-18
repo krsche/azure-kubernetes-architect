@@ -9,10 +9,8 @@ export default {
   },
 
   DEBUG_STORAGE () {
-    console.log('---')
     const data = JSON.parse(sessionStorage.getItem('aks-decisions'))
-    console.log(`[STORAGE] decisions made: ${data.length}`)
+    console.log(`[DEBUG_STORAGE] ${data.length} decisions`)
     console.log(data)
-    console.log('---')
   }
 }

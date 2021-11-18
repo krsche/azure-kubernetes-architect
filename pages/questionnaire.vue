@@ -13,6 +13,7 @@
 				</category>
 
 				<!-- <pre>{{ questionnaire }}</pre> -->
+				<pre>{{ posts }}</pre>
 			</div>
 			<div class="app-sidebar">
 				<score/>
@@ -23,15 +24,28 @@
 </template>
 
 <script>
-	const content = [] // content db
-
-	// Setup: Load order for ./contents/questions folder
+	// Load order for ./contents/questions folder
 	const categoryDirs = [
 		'requirements',
 		'networking'
 	]
 
+	const formContent = [] // content db
+
 	export default {
+		// data: {
+		// 	// return {
+		// 		hello: 'world',
+		// 	// 	foo: () => 'bar'
+		// 	// }
+		// },
+
+    data() {
+      return {
+        posts: ['one', 'two']
+      }
+    },
+
 		/**
 		 * [SSR] Fetch and load Markdown Content
 		 * Loads only title and metadata without body
@@ -41,8 +55,10 @@
 		 * @async
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
-		async asyncData({ $content, params }) { // SSR only
+		async asyncData({ $content, params, store }) { // SSR only
 			const undecidedTemplate = await $content('factors/undecided').fetch()
+
+			// console.log('GOT STORE????', store)
 
 			// --- Questions per Category ---
 			for (const c of categoryDirs) {
@@ -69,18 +85,20 @@
 				}
 
 				// Add to content db
-				content.push(questions)
+				formContent.push(questions)
 			}
 
 			let categories = []
 			categoryDirs.forEach((c, i) => {
 				categories.push({
 					name: c,
-					questions: content[i]
+					questions: formContent[i]
 				})
 			})
 
-			console.log(categories)
+			// console.log(categories)
+			store.commit('LOAD_FORM', categories)
+			// store.dispatch('DEBUG_STORAGE')
 
 			return {
 				categories
@@ -133,10 +151,5 @@
 			slug: `${question.slug}-undecided`
 		}
 	}
-
-	// function _getState() {
-	// 	console.log('_getState')
-	// 	return JSON.parse(sessionStorage.getItem('aks-decisions'))
-	// }
 </script>
 
