@@ -8,9 +8,11 @@ export default {
     state.decisions = JSON.parse(sessionStorage.getItem('aks-decisions'))
   },
 
-  LOAD_FORM (state, formCategories) {
-    console.log('[LOAD_FORM]', formCategories)
+  SET_FORM (state, formCategories) {
+    console.log('[SET_FORM]', formCategories)
     state.form = formCategories
+    console.log('Got state.form?')
+    console.log(JSON.stringify(state.form))
   },
 
   /**

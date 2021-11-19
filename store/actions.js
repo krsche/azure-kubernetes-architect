@@ -1,16 +1,22 @@
 export default {
   nuxtClientInit({ commit }, { req }) {
-    console.log('*** INIT ***')
-    console.log('[DEBUG] Hello from nuxtClientInit')
+    console.log('[nuxtClientInit] Hello World, debug store…')
+    // console.log(store)
 
-    if (sessionStorage.getItem('aks-decisions')) {
-      commit('LOAD_DECISIONS')
-    }
+    // if (sessionStorage.getItem('aks-decisions')) {
+    //   commit('LOAD_DECISIONS')
+    // }
   },
 
-  DEBUG_STORAGE () {
-    const data = JSON.parse(sessionStorage.getItem('aks-decisions'))
-    console.log(`[DEBUG_STORAGE] ${data.length} decisions`)
-    console.log(data)
+  // debugForm () {
+  //   const decisions = JSON.parse(sessionStorage.getItem('aks-decisions'))
+  //   console.log(`[DEBUG_FORM] ${decisions.length} decisions`)
+  //   console.log(decisions)
+  // },
+
+  debugStorage () {
+    const decisions = JSON.parse(sessionStorage.getItem('aks-decisions'))
+    console.log(`[DEBUG_STORAGE] ${decisions.length} decisions`)
+    console.log(decisions)
   }
 }

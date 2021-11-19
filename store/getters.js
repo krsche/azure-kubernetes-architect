@@ -11,5 +11,9 @@ export default {
       score.price += factor.stats.price
     })
     return score
+  },
+
+  form (state) {
+    return state.form
   }
 }
