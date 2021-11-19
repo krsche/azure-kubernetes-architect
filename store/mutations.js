@@ -5,14 +5,14 @@ export default {
    */
   LOAD_DECISIONS (state) {
     console.log('[LOAD_DECISIONS]')
-    state.decisions = JSON.parse(sessionStorage.getItem('aks-decisions'))
+    state.decisions = JSON.parse(sessionStorage.getItem('aks-architect'))
   },
 
   SET_FORM (state, formCategories) {
     console.log('[SET_FORM]', formCategories)
     state.form = formCategories
-    console.log('Got state.form?')
-    console.log(JSON.stringify(state.form))
+    // console.log('Got state.form?')
+    // console.log(JSON.stringify(state.form))
   },
 
   /**
@@ -25,14 +25,22 @@ export default {
    */
   UPDATE_DECISION (state, decision) {
     console.log('[UPDATE_DECISION]: sync state with sessionStorage')
-    const i = _findDecisionByQuestion(state, decision.question.slug)
-    if (i === -1) {
-      state.decisions.push(decision)
-    } else {
-      state.decisions[i].answer = decision.answer
+    console.log(decision)
+    const q = decision.question
+    const a = decision.answer
+
+    state.decisions[q.slug] = {
+      id: a.id,
+      stats: a.stats
     }
 
-    sessionStorage.setItem('aks-decisions', JSON.stringify(state.decisions))
+    // const i = _findDecisionByQuestion(state, decision.question.slug)
+    // if (i === -1) {
+    //   state.decisions.push(decision)
+    // } else {
+    //   state.decisions[i].answer = decision.answer
+    // }
+    sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
   },
 
   /**
@@ -46,11 +54,15 @@ export default {
    */
   REMOVE_DECISION (state, decision) {
     console.log('[REMOVE_DECISION]: sync state with sessionStorage')
-    const i = _findDecisionByQuestion(state, decision.question.slug)
-    if (i !== -1) {
-      state.decisions.splice(i, 1)
-    }
-    sessionStorage.setItem('aks-decisions', JSON.stringify(state.decisions))
+
+    const q = decision.question
+    delete state.decisions[q.slug]
+
+    // const i = _findDecisionByQuestion(state, decision.question.slug)
+    // if (i !== -1) {
+    //   state.decisions.splice(i, 1)
+    // }
+    sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
   },
 
   /**
