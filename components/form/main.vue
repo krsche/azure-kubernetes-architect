@@ -1,12 +1,12 @@
 <template>
 	<div class="form-categories">
-		<category
+		<form-category
 			v-for="cat of categories"
 			:title=cat.name
 			:key=cat.name
 			:questions=cat.questions
 		>
-		</category>
+		</form-category>
 	</div>
 </template>
 

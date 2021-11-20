@@ -20,5 +20,9 @@ export default {
 
   form (state) {
     return state.form
+  },
+
+  decisions (state) {
+    return state.decisions
   }
 }

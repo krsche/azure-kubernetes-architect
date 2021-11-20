@@ -4,7 +4,7 @@
 
 		<div class="app-main wrapper">
 			<div class="app-body">
-				<formMain/>
+				<form-main/>
 			</div>
 			<div class="app-sidebar">
 				<score/>

@@ -7,7 +7,7 @@
 {{ question }}
 		</pre> -->
 
-		<factor-radio
+		<form-input-radio
 			v-for="f of question.factors"
 			:inputName=question.slug
 			:key=f.slug
@@ -15,7 +15,7 @@
 			:stats=f.stats
 			:checked="question.answer === f.slug"
 			@selected="onSelected($event, $store, question)"
-			></factor-radio>
+			></form-input-radio>
 	</article>
 </template>
 

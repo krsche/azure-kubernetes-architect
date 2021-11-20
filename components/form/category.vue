@@ -1,12 +1,12 @@
 <template>
 	<section class="content">
 		<h1 class="category-title">{{ title }}</h1>
-		<question
+		<form-question
 			v-for="question of questions"
 			:key="question.slug"
 			:question=question
 		>
-		</question>
+		</form-question>
 
 		<!-- <pre>{{ questions }}</pre> -->
 	</section>
