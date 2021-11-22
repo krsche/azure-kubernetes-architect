@@ -1,3 +1,7 @@
+// Why is state constantly re-assigned?
+// must replace for re-activity
+// https://vuex.vuejs.org/guide/mutations.html#mutations-follow-vue-s-reactivity-rules
+
 export default {
   /**
    * Load from Session Storage
@@ -29,17 +33,16 @@ export default {
     const q = decision.question
     const a = decision.answer
 
-    state.decisions[q.slug] = {
-      id: a.id,
-      stats: a.stats
+    state.decisions = {
+      ...state.decisions,
+      [q.slug]: {
+        id: a.id,
+        stats: a.stats
+      }
     }
 
-    // const i = _findDecisionByQuestion(state, decision.question.slug)
-    // if (i === -1) {
-    //   state.decisions.push(decision)
-    // } else {
-    //   state.decisions[i].answer = decision.answer
-    // }
+    console.log(state.decisions)
+
     sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
   },
 
@@ -56,12 +59,10 @@ export default {
     console.log('[REMOVE_DECISION]: sync state with sessionStorage')
 
     const q = decision.question
-    delete state.decisions[q.slug]
+    const copy = {...state.decisions}
+    delete copy[q.slug]
+    state.decisions = copy // re-assign for re-activity
 
-    // const i = _findDecisionByQuestion(state, decision.question.slug)
-    // if (i !== -1) {
-    //   state.decisions.splice(i, 1)
-    // }
     sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
   },
 
@@ -74,19 +75,4 @@ export default {
     console.log('[RESET_DATA]: clearing session storage')
     sessionStorage.clear()
   }
-}
-
-// =========
-//  Helpers
-// =========
-
-/**
- * Look for decision by Question
- *
- * @param {Array} state
- * @param {String} slug
- * @returns {Integer} index of matched element, -1 if not found
- */
-const _findDecisionByQuestion = function (state, slug) {
-  return state.decisions.findIndex(el => el.question.slug === slug)
 }

@@ -2,14 +2,13 @@
 	<article class="question-box">
 		<h2 class="question-title"><NuxtLink :to=question.path>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
-		<p>Answer? {{ question.answer }}</p>
-		<!-- <pre>
-{{ question }}
-		</pre> -->
+		<p>Input name <code>{{ inputName }}</code></p>
+		<p>Answer <code>{{ decisions[question.slug] }}</code></p>
+		<!-- <pre>{{ question }}</pre> -->
 
 		<form-input-radio
 			v-for="f of question.factors"
-			:inputName=question.slug
+			:inputName=inputName
 			:key=f.slug
 			:factor=f
 			:stats=f.stats
@@ -21,6 +20,16 @@
 
 <script>
 	export default {
+		computed: {
+			// answer () {
+			// 	// return 'bar'
+			// 	return this.$store.getters.answerByQuestion(question.slug)
+			// },
+
+			decisions () {
+				return this.$store.getters.decisions
+			}
+		},
 
 		// Properties
 		// ----------
@@ -28,7 +37,17 @@
 			question: {
 				type: Object,
 				required: true
+			},
+
+			inputName: {
+				type: String,
+				required: true
 			}
+
+			// answer: {
+			// 	type: String,
+			// 	required: true
+			// }
 		},
 
 		// Methods
@@ -36,7 +55,7 @@
 		methods: {
 			onSelected: function (event, store, question) {
 				/**
-				 * event.selected.id ==> slug
+				 * event.selected.id ==> answer slug
 				 * event.selected.stats
 				 */
 				const selected = event.selected

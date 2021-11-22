@@ -24,5 +24,9 @@ export default {
 
   decisions (state) {
     return state.decisions
+  },
+
+  answerByQuestion: (state) => (questionSlug) => {
+    return state.decisions[questionSlug].id
   }
 }

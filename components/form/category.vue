@@ -5,6 +5,7 @@
 			v-for="question of questions"
 			:key="question.slug"
 			:question=question
+			:inputName="inputName(title, question)"
 		>
 		</form-question>
 
@@ -22,6 +23,12 @@
 			questions: {
 				type: Array,
 				required: true
+			}
+		},
+
+		methods: {
+			inputName: function (category, question) {
+				return `${category}-${question.slug}`
 			}
 		}
 	}

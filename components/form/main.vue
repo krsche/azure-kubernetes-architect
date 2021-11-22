@@ -1,5 +1,9 @@
 <template>
 	<div class="form-categories">
+		<!-- <pre>
+			{{ decisions }}
+		</pre> -->
+
 		<form-category
 			v-for="cat of categories"
 			:title=cat.name
@@ -15,7 +19,10 @@
 		computed: {
     	categories () {
       	return this.$store.getters.form
-			}
+			},
+    	// decisions () {
+      // 	return this.$store.getters.decisions
+			// }
 		}
 	}
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<app-header/>
-
+		<app-debugger/>
 		<div class="app-main wrapper">
 			<div class="app-body">
 				<form-main/>
