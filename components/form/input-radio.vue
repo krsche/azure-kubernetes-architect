@@ -66,9 +66,10 @@
 			},
 
 			getLabelClass: function () {
-				return this.isUndecided()
+				const labelClass = this.isUndecided()
 					? 'label-undecided'
 					: 'label-factor'
+				return `form-control ${labelClass}`
 			},
 
 			onSelected: function (event) {

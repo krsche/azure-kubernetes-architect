@@ -1,4 +1,13 @@
 .app-header {
+	background: var(--purple-color);
+	color: #fff;
+	padding: 0.5rem 0;
+
+	h1 {
+		margin: 0;
+		font-size: 1.4rem;
+	}
+
 	a {
 		text-decoration: none;
 
@@ -7,8 +16,7 @@
 		}
 
 		&:hover, &:active {
-			color: #fff;
-			text-decoration: underline;
+			color: var(--yellow-color);
 		}
 	}
 }

@@ -1,10 +1,9 @@
 body {
 	font-weight: 400;
-	font-family: var(--body-font);
-	// font-size: 0.96rem;
+	font-size: 16px; // 0.96rem;
 	line-height: 1.4em;
+	font-family: var(--body-font);
 	color: var(--body-text-color);
-	background: var(--light-grey-bg-color);
 }
 
 a {
@@ -21,11 +20,16 @@ a {
 	}
 }
 
+h1, h2, h3 {
+	font-family: var(--heading-font);
+}
+
 h1 {
-	font-size: 1.8rem;
+	font-size: 2rem;
 }
 
 h2 {
+	font-size: 1.7rem;
 	color: var(--purple-color);
 }
 
