@@ -26,8 +26,8 @@ export default {
     return state.decisions
   },
 
-  answerByQuestion: (state) => (questionSlug) => {
-    const cond = state.decisions.hasOwnProperty(questionSlug)
+  answerByQuestion: state => (questionSlug) => {
+    const cond = Object.prototype.hasOwnProperty.call(state.decisions, questionSlug)
     console.log(`Does ${questionSlug} exist?`, cond)
     return cond
       ? state.decisions[questionSlug]

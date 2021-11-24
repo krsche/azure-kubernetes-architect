@@ -61,7 +61,7 @@ export default {
 
     const q = decision.question
     const cat = decision.category
-    const copy = {...state.decisions}
+    const copy = { ...state.decisions }
     delete copy[`${cat}-${q.slug}`]
     state.decisions = copy // re-assign for re-activity
 
