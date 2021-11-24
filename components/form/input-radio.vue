@@ -1,7 +1,7 @@
 <template>
 	<div class="factor">
 		<!-- Reset Button -->
-		<label v-if=isUndecided() :for=factor.slug class="label-undecided">
+		<label :for=factor.slug :class=labelElClass()>
 			<input ref="input" type="radio"
 				:name=inputName
 				:id=factor.slug
@@ -9,23 +9,16 @@
 				:value=factor.slug
 				v-on:change="onSelected"
 			>
-			<h4>Reset</h4>
+			<div v-if=isUndecided()>
+				<h4>Reset</h4>
+			</div>
+			<div v-else>
+				<h4>{{ factor.title }}</h4>
+				<p>{{ factor.description }}</p>
+			</div>
 		</label>
 
-		<!-- Radio Input -->
-		<label v-else :for=factor.slug class="label-factor">
-			<input ref="input" type="radio"
-				:name=inputName
-				:id=factor.slug
-				:key=factor.slug
-				:value=factor.slug
-				v-on:change="onSelected"
-			>
-			<h4>{{ factor.title }}</h4>
-			<p>{{ factor.description }}</p>
-		</label>
 
-		<!-- <pre>{{ stats }}</pre> -->
 	</div>
 </template>
 
@@ -52,6 +45,12 @@
 				return parts[parts.length - 1] === 'undecided'
 			},
 
+			labelElClass: function () {
+				return this.isUndecided()
+					? 'label-undecided'
+					: 'label-factor'
+			},
+
 			onSelected: function (event) {
 				const data = {
 					id: event.target.value,
@@ -63,3 +62,10 @@
 		}
   }
 </script>
+
+
+<style scoped>
+.factor label > div {
+	display: inline;
+}
+</style>
