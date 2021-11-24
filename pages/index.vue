@@ -1,11 +1,9 @@
 <template>
-	<div class="app-container">
+	<div>
 		<app-header/>
-
-		<div class="wrapper">
-			 <nuxt-content :document="homepage" />
-		</div>
-
+		<main class="container-wrapper">
+			<nuxt-content :document="homepage" />
+		</main>
 		<app-footer/>
 	</div>
 </template>

@@ -1,8 +1,9 @@
 <template>
-	<div class="app-container">
+	<div>
 		<app-header/>
-    <main class="app-main wrapper">
-			<div class="app-body">
+    <main class="app-grid container-wrapper">
+      <app-navigation/>
+
         <article class="article-page">
           <header class="article-header">
             <h1>{{ article.title }}</h1>
@@ -22,7 +23,8 @@
           <hr>
           <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
         </article>
-  		</div>
+        <app-scoreboard/>
+
     </main>
 		<app-footer/>
 	</div>

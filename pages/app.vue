@@ -1,16 +1,11 @@
 <template>
-	<div class="app-container">
+	<div>
 		<app-header/>
-		<!-- <app-debugger/> -->
-		<div class="app-main wrapper">
-			<div class="app-body">
-				<form-main/>
-			</div>
-			<div class="app-sidebar">
-				<score/>
-			</div>
-		</div>
-
+		<main class="app-grid container-wrapper">
+			<app-navigation/>
+			<app-form/>
+			<app-scoreboard/>
+		</main>
 		<app-footer/>
 	</div>
 </template>

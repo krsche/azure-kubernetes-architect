@@ -1,6 +1,6 @@
 <template>
 	<header class="app-header">
-		<div class="wrapper">
+		<div class="container-wrapper">
 			<h1><a href="/">Azure Kubernetes Architect</a></h1>
 			<button class="btn-reset" @click="onClear">Clear Data</button>
 		</div>

@@ -1,5 +1,9 @@
 body {
-	background: var(--light-grey-bg-color);
+	background: var(--body-bg-color);
+}
+
+* {
+	box-sizing: border-box;
 }
 
 body,
@@ -8,26 +12,20 @@ body,
 	padding: 0;
 }
 
-.wrapper {
+.container-wrapper {
 	margin: 1em auto;
 	max-width: var(--page-max-width);
 }
 
-.app-main,
-.app-sidebar {
-	box-sizing: border-box;
-}
+// .app-navigation {
+// 	border-right: 1px solid var(--layout-border-color);
+// }
 
-.app-main {
+.app-grid {
 	display: grid;
-	grid-template-columns: 1fr var(--sidebar-width);
+	grid-template-columns: var(--nav-width) 1fr var(--sidebar-width);
 }
 
 .app-sidebar {
 	padding-left: 1em;
-	.score {
-		position: sticky;
-		top: 0;
-		left: 0;
-	}
 }

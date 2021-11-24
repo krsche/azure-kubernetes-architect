@@ -12,11 +12,12 @@ a {
 	}
 
 	&:visited {
-		color: #6267b3; //var(--space-cadet-color);
+		color: #182a76; // var(--dark-purple-color);
+		// color: #c1c4f7; //var(--space-cadet-color);
 	}
 
 	&:hover, &:active {
-		color: #34c1cd; //var(--outrageous-orange-color);
+		color: var(--teal-color); //var(--outrageous-orange-color);
 	}
 }
 
@@ -52,9 +53,20 @@ pre {
 	font-size: 1.3rem;
 }
 
-.article-header {
-	h1 {
-		font-size: 2em;
-		text-transform: capitalize;
-	}
+.lead {
+	font-weight: 300;
+	font-size: 1.6em;
+	max-width: 700px;
+	line-height: 1.4em;
+}
+
+h1 {
+	font-size: var(--lg-font-size);
+}
+
+blockquote {
+	background: #fafafa;
+	padding: 1em 2em;
+	border-left: 10px solid #eee;
+	margin: 1em 0;
 }
