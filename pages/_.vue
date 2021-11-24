@@ -1,32 +1,24 @@
 <template>
 	<div>
-		<app-header/>
-    <main class="app-grid container-wrapper">
-      <app-navigation/>
+    <article class="article-page">
+      <header class="article-header">
+        <h1>{{ article.title }}</h1>
+        <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
+      </header>
+      <nuxt-content :document="article" />
 
-        <article class="article-page">
-          <header class="article-header">
-            <h1>{{ article.title }}</h1>
-            <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
-          </header>
-          <nuxt-content :document="article" />
-
-          <section v-if="factors.length > 0">
-            <h2>Factors</h2>
-            <article v-for="f of factors" v-bind:key="f.path">
-              <h3>{{ f.title }}</h3>
-              <nuxt-content :document="f" />
-            </article>
-          </section>
-
-          <!-- <pre>{{ factors }}</pre> -->
-          <hr>
-          <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
+      <section v-if="factors.length > 0">
+        <h2>Factors</h2>
+        <article v-for="f of factors" v-bind:key="f.path">
+          <h3>{{ f.title }}</h3>
+          <nuxt-content :document="f" />
         </article>
-        <app-scoreboard/>
+      </section>
 
-    </main>
-		<app-footer/>
+      <!-- <pre>{{ factors }}</pre> -->
+      <hr>
+      <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
+    </article>
 	</div>
 </template>
 

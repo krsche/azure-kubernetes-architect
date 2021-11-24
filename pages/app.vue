@@ -1,13 +1,5 @@
 <template>
-	<div>
-		<app-header/>
-		<main class="app-grid container-wrapper">
-			<app-navigation/>
-			<app-form/>
-			<app-scoreboard/>
-		</main>
-		<app-footer/>
-	</div>
+	<app-form/>
 </template>
 
 <script>
