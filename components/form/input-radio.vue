@@ -1,19 +1,22 @@
 <template>
 	<div class="factor">
 		<!-- Reset Button -->
-		<label :for=factor.slug :class=labelElClass()>
+		<label :for=factor.slug :class=getLabelClass()>
 			<input ref="input" type="radio"
-				:name=inputName
+				:name=inputName()
 				:id=factor.slug
 				:key=factor.slug
 				:value=factor.slug
 				v-on:change="onSelected"
 			>
+
+			<!-- v-model=
+				v-bind:value="factor.slug" -->
 			<div v-if=isUndecided()>
 				<h4>Reset</h4>
 			</div>
 			<div v-else>
-				<h4>{{ factor.title }}</h4>
+				<h4>{{ factor.title }} ({{ this.answer }})</h4>
 				<p>{{ factor.description }}</p>
 			</div>
 		</label>
@@ -29,7 +32,11 @@
         type: Object,
         required: true
       },
-			inputName: {
+			question: {
+				type: Object,
+				required: true
+			},
+			category: {
 				type: String,
 				required: true
 			},
@@ -39,13 +46,23 @@
 			}
     },
 
+		computed: {
+    	answer () {
+      	return this.$store.getters.answerByQuestion(this.question.slug)
+			}
+		},
+
 		methods: {
+			inputName: function () {
+				return `${this.category}-${this.question.slug}`
+			},
+
 			isUndecided: function () {
 				const parts = this.factor.slug.split('-')
 				return parts[parts.length - 1] === 'undecided'
 			},
 
-			labelElClass: function () {
+			getLabelClass: function () {
 				return this.isUndecided()
 					? 'label-undecided'
 					: 'label-factor'
@@ -53,7 +70,7 @@
 
 			onSelected: function (event) {
 				const data = {
-					id: event.target.value,
+					factor_id: event.target.value,
 					stats: this.factor.stats
 				}
 				console.log(`factor(${this.factor.slug}): selected`)

@@ -27,6 +27,8 @@ export default {
   },
 
   answerByQuestion: (state) => (questionSlug) => {
-    return state.decisions[questionSlug].id
+    return state.decisions.hasOwnProperty(questionSlug)
+      ? state.decisions[questionSlug]
+      : `${questionSlug}-undecided`
   }
 }

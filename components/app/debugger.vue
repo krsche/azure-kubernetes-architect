@@ -1,5 +1,8 @@
 <template>
-	<pre>{{ decisions }}</pre>
+	<div>
+		<h4>Decisions</h4>
+		<pre>{{ decisions }}</pre>
+	</div>
 </template>
 
 <script>

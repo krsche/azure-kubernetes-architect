@@ -5,10 +5,11 @@
 			v-for="question of questions"
 			:key="question.slug"
 			:question=question
-			:inputName="inputName(title, question)"
+			:category=title
+
 		>
 		</form-question>
-
+		<!-- My category {{ title }} -->
 		<!-- <pre>{{ questions }}</pre> -->
 	</section>
 </template>
@@ -26,10 +27,10 @@
 			}
 		},
 
-		methods: {
-			inputName: function (category, question) {
-				return `${category}-${question.slug}`
-			}
-		}
+		// methods: {
+		// 	inputName: function (category, question) {
+		// 		return `${category}-${question.slug}`
+		// 	}
+		// }
 	}
 </script>

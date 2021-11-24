@@ -32,11 +32,12 @@ export default {
     console.log(decision)
     const q = decision.question
     const a = decision.answer
+    const cat = decision.category
 
     state.decisions = {
       ...state.decisions,
-      [q.slug]: {
-        id: a.id,
+      [`${cat}-${q.slug}`]: {
+        factor_id: a.factor_id,
         stats: a.stats
       }
     }

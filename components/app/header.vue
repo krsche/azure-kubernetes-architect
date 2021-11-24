@@ -1,7 +1,7 @@
 <template>
 	<header class="app-header">
 		<div class="wrapper">
-			<h1>Azure Kubernetes Architect</h1>
+			<h1><a href="/questionnaire">Azure Kubernetes Architect</a></h1>
 			<button @click="onClick">debug</button>
 			<button @click="onClear">clear storage</button>
 		</div>
@@ -35,5 +35,9 @@ export default {
 	.app-header h1 {
 		margin: 0;
 		font-size: 1.4rem;
+	}
+
+	.app-header a {
+		color: #fff;
 	}
 </style>

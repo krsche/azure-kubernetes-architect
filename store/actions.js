@@ -3,9 +3,9 @@ export default {
     console.log('[nuxtClientInit] Hello World, debug store…')
     // console.log(store)
 
-    // if (sessionStorage.getItem('aks-architect')) {
-    //   commit('LOAD_DECISIONS')
-    // }
+    if (sessionStorage.getItem('aks-architect')) {
+      commit('LOAD_DECISIONS')
+    }
   },
 
   // debugForm () {
