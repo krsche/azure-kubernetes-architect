@@ -4,7 +4,7 @@
 	There is no single perfect cluster design or configuration. Instead ask yourself - how well does my cluster design meet my business requirements?
 </p>
 
-<a class="btn btn-lrg" href="/questionnaire">Mesaure your Cluster Architecture &rarr;</a>
+<a class="btn btn-lrg" href="/designer">Mesaure your Cluster Architecture &rarr;</a>
 
 <br><br>
 
