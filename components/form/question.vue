@@ -1,6 +1,6 @@
 <template>
 	<article class="question-box">
-		<h2 class="question-title"><NuxtLink :to=question.path>{{ question.title }}</NuxtLink></h2>
+		<h2 class="question-title"><NuxtLink :to=guideLink()>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
 		<form-input-radio
 			v-for="f of question.factors"
@@ -36,6 +36,10 @@
 		},
 
 		methods: {
+			guideLink: function () {
+				return `guide/${this.category}/${this.question.slug}`
+			},
+
 			onSelected: function (event, store, category, question) {
 				/**
 				 * event.selected.id ==> answer slug

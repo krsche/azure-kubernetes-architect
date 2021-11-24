@@ -31,10 +31,10 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/${params.pathMatch || 'index'}`
+    const path = `/questions/${params.category}/${params.question_slug}`
     const [article] = await $content({ deep: true }).where({ path }).fetch()
 
-    console.log(article)
+    // console.log(article)
     let content = { article } // default content
 
     if (!article) {
