@@ -1,28 +1,20 @@
 <template>
-	<div class="factor">
-		<!-- Reset Button -->
 		<label :for=factor.slug :class=getLabelClass()>
 			<input ref="input" type="radio"
 				:name=inputName()
 				:id=factor.slug
 				:key=factor.slug
 				:value=factor.slug
-				v-on:change="onSelected"
+				v-model=answer
 			>
-
-			<!-- v-model=
-				v-bind:value="factor.slug" -->
 			<div v-if=isUndecided()>
 				<h4>Reset</h4>
 			</div>
 			<div v-else>
-				<h4>{{ factor.title }} ({{ this.answer }})</h4>
+				<h4>{{ factor.title }}</h4>
 				<p>{{ factor.description }}</p>
 			</div>
 		</label>
-
-
-	</div>
 </template>
 
 <script>
@@ -47,9 +39,20 @@
     },
 
 		computed: {
-    	answer () {
-      	return this.$store.getters.answerByQuestion(this.question.slug)
-			}
+			answer: {
+				get () {
+					return this.$store.getters.answerByQuestion(`${this.category}-${this.question.slug}`).factor_id
+				},
+
+				set (value) {
+					const data = {
+						factor_id: value,
+						stats: this.factor.stats
+					}
+				console.log(`factor(${this.factor.slug}): selected`)
+				this.$emit('selected', { selected: data })
+				}
+			},
 		},
 
 		methods: {
@@ -82,7 +85,7 @@
 
 
 <style scoped>
-.factor label > div {
+label > div {
 	display: inline;
 }
 </style>

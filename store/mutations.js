@@ -1,22 +1,24 @@
-// Why is state constantly re-assigned?
-// must replace for re-activity
-// https://vuex.vuejs.org/guide/mutations.html#mutations-follow-vue-s-reactivity-rules
+const config = require('./../app.config')
 
 export default {
   /**
-   * Load from Session Storage
-   * @param {Observable} state
+   * Load existing decision data from browser's sessionStorage
+   * @param {Array|Observable?} state
    */
   LOAD_DECISIONS (state) {
     console.log('[LOAD_DECISIONS]')
-    state.decisions = JSON.parse(sessionStorage.getItem('aks-architect'))
+    state.decisions = JSON.parse(sessionStorage.getItem(config.storageKey))
   },
 
+  /**
+   * Populate the state with the form data
+   *
+   * @param {Array|Observable?} state
+   * @param {Array} formCategories
+   */
   SET_FORM (state, formCategories) {
     console.log('[SET_FORM]', formCategories)
     state.form = formCategories
-    // console.log('Got state.form?')
-    // console.log(JSON.stringify(state.form))
   },
 
   /**
@@ -29,7 +31,7 @@ export default {
    */
   UPDATE_DECISION (state, decision) {
     console.log('[UPDATE_DECISION]: sync state with sessionStorage')
-    console.log(decision)
+    // console.log(decision)
     const q = decision.question
     const a = decision.answer
     const cat = decision.category
@@ -42,9 +44,7 @@ export default {
       }
     }
 
-    console.log(state.decisions)
-
-    sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
+    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
   },
 
   /**
@@ -60,20 +60,22 @@ export default {
     console.log('[REMOVE_DECISION]: sync state with sessionStorage')
 
     const q = decision.question
+    const cat = decision.category
     const copy = {...state.decisions}
-    delete copy[q.slug]
+    delete copy[`${cat}-${q.slug}`]
     state.decisions = copy // re-assign for re-activity
 
-    sessionStorage.setItem('aks-architect', JSON.stringify(state.decisions))
+    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
   },
 
   /**
-   * Clear session storage
+   * Clear session storage and empties decisions.
    *
    * @param {Array|Observable?} state
    */
   RESET_DATA (state) {
     console.log('[RESET_DATA]: clearing session storage')
     sessionStorage.clear()
+    state.decisions = {}
   }
 }

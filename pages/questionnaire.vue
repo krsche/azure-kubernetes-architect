@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<app-header/>
-		<app-debugger/>
+		<!-- <app-debugger/> -->
 		<div class="app-main wrapper">
 			<div class="app-body">
 				<form-main/>
@@ -38,14 +38,14 @@
 		async asyncData({ $content, params, store }) {
 			const undecidedTemplate = await $content('factors/undecided').fetch()
 
-			// --- Questions per Category ---
+			// --- Questions per Category --- //
 			for (const c of categoryDirs) {
 				const questions = await $content(`questions/${c}`)
 					.sortBy('path')
 					.without(['toc', 'body'])
 					.fetch()
 
-				// --- Answers per Question ---
+				// --- Answers per Question --- //
 				for (const q of questions) {
 					const factors  = q.factors // required, defined in question markdown
 					q.factors = []

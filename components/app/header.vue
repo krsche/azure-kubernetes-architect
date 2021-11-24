@@ -2,8 +2,7 @@
 	<header class="app-header">
 		<div class="wrapper">
 			<h1><a href="/questionnaire">Azure Kubernetes Architect</a></h1>
-			<button @click="onClick">debug</button>
-			<button @click="onClear">clear storage</button>
+			<button class="btn-reset" @click="onClear">Clear Data</button>
 		</div>
 	</header>
 </template>
@@ -11,11 +10,6 @@
 <script>
 export default {
 	methods: {
-		onClick: function (event, store) {
-			console.log('AppHeader.vue - onClick()')
-			this.$store.dispatch('DEBUG_STORAGE')
-		},
-
 		onClear: function (event, store) {
 			console.log('AppHeader.vue - onClear()')
 			this.$store.commit('RESET_DATA')
@@ -25,19 +19,8 @@ export default {
 </script>
 
 
-<style>
-	.app-header {
-		background: var(--purple-color);
-		color: #fff;
-		padding: 0.5rem 0;
-	}
-
-	.app-header h1 {
-		margin: 0;
-		font-size: 1.4rem;
-	}
-
-	.app-header a {
-		color: #fff;
-	}
+<style scoped>
+.btn-reset {
+	float: right;
+}
 </style>

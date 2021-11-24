@@ -6,11 +6,8 @@
 			:key="question.slug"
 			:question=question
 			:category=title
-
 		>
 		</form-question>
-		<!-- My category {{ title }} -->
-		<!-- <pre>{{ questions }}</pre> -->
 	</section>
 </template>
 
@@ -25,12 +22,6 @@
 				type: Array,
 				required: true
 			}
-		},
-
-		// methods: {
-		// 	inputName: function (category, question) {
-		// 		return `${category}-${question.slug}`
-		// 	}
-		// }
+		}
 	}
 </script>
