@@ -41,7 +41,7 @@
 		computed: {
 			answer: {
 				get () {
-					return this.$store.getters.answerByQuestion(`${this.category}-${this.question.slug}`).factor_id
+					return this.$store.getters['decisions/answerByQuestion'](`${this.category}-${this.question.slug}`).factor_id
 				},
 
 				set (value) {
@@ -49,7 +49,7 @@
 						factor_id: value,
 						stats: this.factor.stats
 					}
-				console.log(`factor(${this.factor.slug}): selected`)
+				// console.log(`factor(${this.factor.slug}): selected`)
 				this.$emit('selected', { selected: data })
 				}
 			},

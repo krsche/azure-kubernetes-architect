@@ -61,7 +61,7 @@
 				})
 			})
 
-			store.commit('SET_FORM', categories)
+			store.commit('form/set', categories)
 			return
 		},
 	}

@@ -47,8 +47,8 @@
 				 */
 				const selected = event.selected
 				const mutation = selected.factor_id.substr(selected.factor_id.length - 9) == 'undecided'
-					? 'REMOVE_DECISION'
-					: 'UPDATE_DECISION'
+					? 'decisions/remove'
+					: 'decisions/update'
 
 				store.commit(mutation, {
 					category: category,

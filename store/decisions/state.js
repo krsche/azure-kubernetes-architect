@@ -1,7 +1,7 @@
-import schemas from './schemas'
+import schemas from '../schemas'
 
 export default () => ({
-  form: [],
+  // form: [],
   decisions: {},
   scoreCache: schemas.scoreCache()
 })

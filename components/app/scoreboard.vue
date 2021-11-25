@@ -30,14 +30,13 @@
 	export default {
 		computed: {
     	scores () {
-      	return this.$store.getters.overallScore
+      	return this.$store.getters['decisions/overallScore']
 			}
 		},
 
 		methods: {
 			onClear: function (event, store) {
-				console.log('AppHeader.vue - onClear()')
-				this.$store.commit('RESET_DATA')
+				this.$store.commit('decisions/reset')
 			}
 		}
 	}
