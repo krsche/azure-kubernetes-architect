@@ -10,7 +10,13 @@
 				:score=score
 			>
 			</score-meter>
-			<div class="details">
+			<div class="score-details">
+				<div>
+					<a href="#" class="btn btn-primary">Understand Your Score</a>
+				</div>
+				<div>
+					<button class="btn btn-primary-outline" @click="onClear">Reset All Values</button>
+				</div>
 				<p>Higher is not better. As a startup you may do not need a security and complexity required in healthcare industries.</p>
 				<p>
 					<a href="#">What do these scores mean?</a>
@@ -25,6 +31,13 @@
 		computed: {
     	scores () {
       	return this.$store.getters.overallScore
+			}
+		},
+
+		methods: {
+			onClear: function (event, store) {
+				console.log('AppHeader.vue - onClear()')
+				this.$store.commit('RESET_DATA')
 			}
 		}
 	}

@@ -14,6 +14,8 @@ body,
 
 .container-wrapper {
 	margin: 1em auto;
+	padding-left: var(--gutter-width);
+	padding-right: var(--gutter-width);
 	max-width: var(--page-max-width);
 }
 
