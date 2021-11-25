@@ -1,5 +1,3 @@
-const config = require('./../app.config')
-
 export default {
   /**
    * Load existing decision data from browser's sessionStorage
@@ -7,7 +5,7 @@ export default {
    */
   LOAD_DECISIONS (state) {
     console.log('[LOAD_DECISIONS]')
-    state.decisions = JSON.parse(sessionStorage.getItem(config.storageKey))
+    state.decisions = JSON.parse(sessionStorage.getItem('decisions'))
   },
 
   /**
@@ -44,7 +42,7 @@ export default {
       }
     }
 
-    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+    sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
   },
 
   /**
@@ -65,7 +63,7 @@ export default {
     delete copy[`${cat}-${q.slug}`]
     state.decisions = copy // re-assign for re-activity
 
-    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+    sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
   },
 
   /**

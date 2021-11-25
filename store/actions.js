@@ -1,5 +1,3 @@
-const config = require('./../app.config')
-
 export default {
 
   /**
@@ -7,9 +5,9 @@ export default {
    * in browser sessionStorage. If so, dispatch LOAD_DECSISIONs.
    */
   nuxtClientInit ({ commit }, { req }) {
-    console.log('[nuxtClientInit] Hello World')
+    console.log('[action] nuxtClientInit()')
 
-    if (sessionStorage.getItem(config.storageKey)) {
+    if (sessionStorage.getItem('decisions')) {
       commit('LOAD_DECISIONS')
     }
   }

@@ -1,4 +1,7 @@
+import schemas from './schemas'
+
 export default () => ({
   form: [],
-  decisions: {}
+  decisions: {},
+  scoreCache: schemas.scoreCache()
 })

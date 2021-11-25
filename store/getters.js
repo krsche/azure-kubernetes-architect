@@ -28,7 +28,7 @@ export default {
 
   answerByQuestion: state => (questionSlug) => {
     const cond = Object.prototype.hasOwnProperty.call(state.decisions, questionSlug)
-    console.log(`Does ${questionSlug} exist?`, cond)
+    // console.log(`Does ${questionSlug} exist?`, cond)
     return cond
       ? state.decisions[questionSlug]
       : `${questionSlug}-undecided`
