@@ -27,23 +27,5 @@ module.exports = {
 		'extension',
 		'createdAt',
 		'updatedAt'
-	],
-
-	// for decisions
-	questionExcerpted: [
-		'path',
-		'slug',
-		'inputName',
-		'shortTitle'
-	],
-
-	// for decisions
-	factorExcerpted: [
-		'path',
-		'slug',
-		'inputValue',
-		'title',
-		'points',
-		'description'
 	]
 }
