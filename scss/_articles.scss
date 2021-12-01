@@ -17,3 +17,11 @@
 .article-factors {
 	margin-top: 3em;
 }
+
+.article-radio-inputs {
+  margin-bottom: 2em;
+
+	& + hr {
+		margin-bottom: 2em;
+	}
+}
